@@ -6,6 +6,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,14 +20,20 @@ public class ExceptionAndValidationHandler extends ResponseEntityExceptionHandle
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
-
 		BindingResult br = ex.getBindingResult();
 		List<ObjectError> errors = br.getAllErrors();
-		List<String> list = new ArrayList<>();
-		for (ObjectError e : errors) {
-			list.add(e.getDefaultMessage());
+		List<String> errorMessages = new ArrayList<>();
+		for (ObjectError error : errors) {
+			if (error instanceof FieldError) {
+				FieldError fieldError = (FieldError) error;
+				String errorMessage = fieldError.getDefaultMessage();
+				errorMessages.add(errorMessage);
+			}
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("\"message\" : \"Invalid request payload\"");
+		if (errorMessages.isEmpty()) {
+			errorMessages.add("Invalid request payload");
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
 	}
 
 	@ExceptionHandler(PatientNotFoundException.class)

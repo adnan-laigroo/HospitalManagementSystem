@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,7 +24,8 @@ public class Patient {
 	@NotBlank(message = "Last name is required")
 	@Pattern(regexp = "^[A-Za-z]+$", message = "Only alphabets are allowed for last name")
 	private String lastName;
-
+	
+	@NotNull(message = "Address is required")
 	@Embedded
 	private Address address;
 
@@ -31,7 +33,7 @@ public class Patient {
 	@Pattern(regexp = "^[0-9]{10}$", message = "Phone number should contain exactly 10 digits")
 	private String phoneNo;
 
-	@NotBlank(message = "Symptom is required")
+	@NotNull(message = "Symptom is required")
 	@Pattern(regexp = "^(Arthritis|Backpain|Tissue injuries|Dysmenorrhea|Skin infection|Skin burn|Ear pain)$", message = "Invalid symptom")
 	private String symptom;
 

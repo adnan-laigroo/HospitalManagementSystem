@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -47,7 +48,7 @@ public class PatientController {
 	}
 
 	// get list of all Patients
-	@PutMapping("/list")
+	@GetMapping("/list")
 	public ResponseEntity<List<Patient>> getAllPatient() {
 		List<Patient> patients = patServ.getPatientList();
 		return ResponseEntity.status(HttpStatus.OK).body(patients);

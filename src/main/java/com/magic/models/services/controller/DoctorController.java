@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.magic.models.Doctor;
 import com.magic.models.User;
@@ -21,6 +23,7 @@ import com.magic.models.dto.DoctorUserMapper;
 import com.magic.models.services.DoctorService;
 import com.magic.models.services.UserService;
 
+@RestController
 @RequestMapping("hospital/doctor")
 public class DoctorController {
 	@Autowired
@@ -33,8 +36,9 @@ public class DoctorController {
 	public ResponseEntity<Doctor> addDoctor(@Valid @RequestBody DoctorDto doctorDto) {
 		Doctor doctor = DoctorUserMapper.mapToDoctor(doctorDto);
 		User user = DoctorUserMapper.mapToUser(doctorDto);
-		userServ.saveUser(user);
 		docServ.saveDoctor(doctor);
+		user.setUsername(doctor.getEmail());
+		userServ.saveUser(user);
 		return ResponseEntity.status(HttpStatus.OK).body(doctor);
 	}
 
@@ -53,7 +57,7 @@ public class DoctorController {
 	}
 
 	// get list of all doctors
-	@PutMapping("/list")
+	@GetMapping("/list")
 	public ResponseEntity<List<Doctor>> getAllDoctor() {
 		List<Doctor> doctors = docServ.getDoctorList();
 		return ResponseEntity.status(HttpStatus.OK).body(doctors);

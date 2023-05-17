@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,7 +75,7 @@ public class AdminController {
 		}
 
 		// get list of all doctors
-		@PutMapping("/list")
+		@GetMapping("/list")
 		public ResponseEntity<List<Doctor>> getAllDoctor() {
 			List<Doctor> doctors = docServ.getDoctorList();
 			return ResponseEntity.status(HttpStatus.OK).body(doctors);
@@ -110,7 +111,7 @@ public class AdminController {
 		}
 
 		// get list of all receptionists
-		@PutMapping("/list")
+		@GetMapping("/list")
 		public ResponseEntity<List<Receptionist>> getAllReceptionist() {
 			List<Receptionist> receptionists = recepServ.getReceptionistList();
 			return ResponseEntity.status(HttpStatus.OK).body(receptionists);
@@ -144,7 +145,7 @@ public class AdminController {
 		}
 
 		// get list of all Patients
-		@PutMapping("/list")
+		@GetMapping("/list")
 		public ResponseEntity<List<Patient>> getAllPatient() {
 			List<Patient> patients = patServ.getPatientList();
 			return ResponseEntity.status(HttpStatus.OK).body(patients);
@@ -177,7 +178,7 @@ public class AdminController {
 		}
 
 		// get list of all Appointments
-		@PutMapping("/list")
+		@GetMapping("/list")
 		public ResponseEntity<List<Appointment>> getAllAppointment() {
 			List<Appointment> appointments = appServ.getAppointmentList();
 			return ResponseEntity.status(HttpStatus.OK).body(appointments);

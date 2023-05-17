@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,8 +35,9 @@ public class ReceptionistController {
 	public ResponseEntity<Receptionist> addReceptionist(@Valid @RequestBody ReceptionistDto receptionistDto) {
 		Receptionist receptionist = ReceptionistUserMapper.mapToReceptionist(receptionistDto);
 		User user = ReceptionistUserMapper.mapToUser(receptionistDto);
-		userServ.saveUser(user);
 		recepServ.saveReceptionist(receptionist);
+		user.setUsername(receptionist.getEmail());
+		userServ.saveUser(user);
 		return ResponseEntity.status(HttpStatus.OK).body(receptionist);
 	}
 
@@ -55,7 +57,7 @@ public class ReceptionistController {
 	}
 
 	// get list of all receptionists
-	@PutMapping("/list")
+	@GetMapping("/list")
 	public ResponseEntity<List<Receptionist>> getAllReceptionist() {
 		List<Receptionist> receptionists = recepServ.getReceptionistList();
 		return ResponseEntity.status(HttpStatus.OK).body(receptionists);
