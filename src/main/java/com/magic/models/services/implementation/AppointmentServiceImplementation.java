@@ -87,8 +87,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
 
 	@Override
 	public List<Appointment> getAppointmentList() {
-		List<Appointment> Appointments = appRepo.findAll();
-		return Appointments;
+		List<Appointment> appointments = appRepo.findAll();
+		return appointments;
 	}
 
 	@Override
@@ -96,6 +96,6 @@ public class AppointmentServiceImplementation implements AppointmentService {
 		Appointment appointment = appRepo.findById(apId).orElse(null);
 		appointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
 		appRepo.save(appointment);
-		return updatedAppointment;
+		return appointment;
 	}
 }

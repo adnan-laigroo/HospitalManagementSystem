@@ -24,7 +24,6 @@ public class Appointment {
 	@Pattern(regexp = "^(O|A|B|AB)[+-]$", message = "Invalid blood group")
 	private String bloodGroup;
 
-	@NotBlank(message = "Doctor ID cannot be blank")
 	private String docId;
 
 	private LocalDate appointmentDate;
@@ -32,7 +31,6 @@ public class Appointment {
 	@NotBlank(message = "Appointment time cannot be blank")
 	private String appointmentTime;
 
-	@NotBlank(message = "Appointment status cannot be blank")
 	private String appointmentStatus;
 
 	public String getApId() {
