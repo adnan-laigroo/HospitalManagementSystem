@@ -1,0 +1,448 @@
+{
+	"info": {
+		"_postman_id": "f139dbe4-8c24-4326-a78a-6b2b4562d29c",
+		"name": "Hospital Management API",
+		"description": "Collection of endpoints for a Hospital Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Doctor APIs",
+			"item": [
+				{
+					"name": "Add Doctor",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"John\",\n\t\"lastName\": \"Doe\",\n\t\"email\": \"john.doe@gmail.com\",\n\t\"phoneNo\": \"1234567890\",\n\t\"speciality\": \"Orthopedic\",\n    \"role\": \"Doctor\",\n    \"password\":\"Admin@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/doctor/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"doctor",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Doctors",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/doctor/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"doctor",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Doctor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/doctor/delete/john.doe@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"doctor",
+								"delete",
+								"john.doe@example.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Doctor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"John\",\n\t\"lastName\": \"Doe\",\n\t\"email\": \"john.doe@example.com\",\n\t\"phoneNo\": \"1234567890\",\n\t\"speciality\": \"Orthopedic\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/doctor/update/john.doe@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"doctor",
+								"update",
+								"john.doe@example.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Receptionist APIs",
+			"item": [
+				{
+					"name": "Add Receptionist",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Jane\",\n\t\"lastName\": \"Smith\",\n\t\"email\": \"jane.smith@example.com\",\n\t\"phoneNo\": \"9876543210\",\n    \"role\": \"Receptionist\",\n    \"password\":\"Admin@123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/receptionist/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"receptionist",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Receptionists",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/receptionist/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"receptionist",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Receptionist",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Jane\",\n\t\"lastName\": \"Smith\",\n\t\"email\": \"jane.smith@example.com\",\n\t\"phoneNo\": \"9876543210\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/receptionist/update/jane.smith@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"receptionist",
+								"update",
+								"jane.smith@example.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Receptionist",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/receptionist/delete/jane.smith@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"receptionist",
+								"delete",
+								"jane.smith@example.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Patient APIs",
+			"item": [
+				{
+					"name": "Add Patient",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Alice\",\n\t\"lastName\": \"Johnson\",\n\t\"phoneNo\": \"4567890123\",\n\t\"address\": {\n\t\t\"firstLine\": \"123 Main St\",\n\t\t\"secondLine\": \"New York\",\n\t\t\"pincode\": \"10001\"\n\t},\n    \"symptom\":\"Arthritis\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/patient/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"patient",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Patients",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/patient/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"patient",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Patient",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"firstName\": \"Alice\",\n\t\"lastName\": \"Johnson\",\n\t\"email\": \"alice.johnson@example.com\",\n\t\"phoneNo\": \"4567890123\",\n\t\"address\": {\n\t\t\"street\": \"123 Main St\",\n\t\t\"city\": \"New York\",\n\t\t\"state\": \"NY\",\n\t\t\"zipcode\": \"10001\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/patient/update/alice.johnson@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"patient",
+								"update",
+								"alice.johnson@example.com"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/patient/delete/alice.johnson@example.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"patient",
+								"delete",
+								"alice.johnson@example.com"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointment APIs",
+			"item": [
+				{
+					"name": "Add Appointment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/appointment/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"appointment",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/appointment/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"appointment",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment Status",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/appointment/update/status/{appId}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"appointment",
+								"update",
+								"status",
+								"{appId}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/appointment/update/{appId}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"appointment",
+								"update",
+								"{appId}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/hospital/appointment/delete/{appId}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"appointment",
+								"delete",
+								"{appId}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
