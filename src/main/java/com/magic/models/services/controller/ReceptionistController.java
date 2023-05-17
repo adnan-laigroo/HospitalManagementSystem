@@ -14,21 +14,29 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.magic.models.Receptionist;
+import com.magic.models.User;
+import com.magic.models.dto.ReceptionistDto;
+import com.magic.models.dto.ReceptionistUserMapper;
 import com.magic.models.services.ReceptionistService;
+import com.magic.models.services.UserService;
 
 @RestController
-@RequestMapping("/receptionist")
+@RequestMapping("hospital/receptionist")
 public class ReceptionistController {
 	@Autowired
 	ReceptionistService recepServ;
+	@Autowired
+	UserService userServ;
 
 	// Add a receptionist
 	@PostMapping("/add")
-	public ResponseEntity<Receptionist> addReceptionist(@Valid @RequestBody Receptionist Receptionist) {
-		recepServ.saveReceptionist(Receptionist);
-		return ResponseEntity.status(HttpStatus.OK).body(Receptionist);
+	public ResponseEntity<Receptionist> addReceptionist(@Valid @RequestBody ReceptionistDto receptionistDto) {
+		Receptionist receptionist = ReceptionistUserMapper.mapToReceptionist(receptionistDto);
+		User user = ReceptionistUserMapper.mapToUser(receptionistDto);
+		userServ.saveUser(user);
+		recepServ.saveReceptionist(receptionist);
+		return ResponseEntity.status(HttpStatus.OK).body(receptionist);
 	}
 
 	// delete a receptionist

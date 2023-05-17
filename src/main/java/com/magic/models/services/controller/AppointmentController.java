@@ -20,7 +20,7 @@ import com.magic.models.Appointment;
 import com.magic.models.services.AppointmentService;
 
 @RestController
-@RequestMapping("/appointment")
+@RequestMapping("hospital/appointment")
 public class AppointmentController {
 	@Autowired
 	AppointmentService appServ;

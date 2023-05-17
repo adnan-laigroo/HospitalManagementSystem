@@ -8,4 +8,6 @@ public interface UserService {
 
 	User updateUserPassword(User updatedPassword, @Valid String username);
 
+	void saveUser(User user);
+
 }

@@ -13,20 +13,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.magic.models.Doctor;
+import com.magic.models.User;
+import com.magic.models.dto.DoctorDto;
+import com.magic.models.dto.DoctorUserMapper;
 import com.magic.models.services.DoctorService;
+import com.magic.models.services.UserService;
 
-@RestController
-@RequestMapping("/doctor")
+@RequestMapping("hospital/doctor")
 public class DoctorController {
 	@Autowired
 	DoctorService docServ;
+	@Autowired
+	UserService userServ;
 
 	// Add an doctor
 	@PostMapping("/add")
-	public ResponseEntity<Doctor> addDoctor(@Valid @RequestBody Doctor doctor) {
+	public ResponseEntity<Doctor> addDoctor(@Valid @RequestBody DoctorDto doctorDto) {
+		Doctor doctor = DoctorUserMapper.mapToDoctor(doctorDto);
+		User user = DoctorUserMapper.mapToUser(doctorDto);
+		userServ.saveUser(user);
 		docServ.saveDoctor(doctor);
 		return ResponseEntity.status(HttpStatus.OK).body(doctor);
 	}

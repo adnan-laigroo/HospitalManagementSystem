@@ -19,7 +19,7 @@ import com.magic.models.Patient;
 import com.magic.models.services.PatientService;
 
 @RestController
-@RequestMapping("/patient")
+@RequestMapping("hospital/patient")
 public class PatientController {
 	@Autowired
 	PatientService patServ;

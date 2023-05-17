@@ -16,7 +16,7 @@ public class DoctorServiceImplementation implements DoctorService {
 	@Override
 	public void saveDoctor(@Valid Doctor doctor) {
 		docRepo.save(doctor);
-
+		
 	}
 
 	@Override
