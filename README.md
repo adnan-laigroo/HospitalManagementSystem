@@ -91,6 +91,39 @@ The `Appointment` class has the following fields and backend validations:
 - `appointmentTime` (String): Represents the appointment time in the format "hh:mm:ss".
 - `appointmentStatus` (String): Represents the appointment status. It should be initially set to "pending" and can be updated by doctors, admin, or receptionists after the patient and doctor meeting.
 
+#### Save Appointment Function
+
+The `saveAppointment` function in the `AppointmentServiceImplementation` class has been enhanced to check for appointment time conflicts and assign the appointment to the doctor with the least pending appointments.
+
+#### Features
+
+1. Appointment Time Conflict Check: Before saving the appointment, the function now checks if the appointment time conflicts with existing appointments for the doctor with the least pending appointments. It retrieves the list of appointments for the doctor and compares the appointment date and time with the new appointment. If a conflict is found, the function removes the doctor from the list and gets the next available doctor.
+
+2. Removing Conflicting Doctor: When a conflict is detected, the doctor with the least pending appointments is removed from the `doctorList` using the `removeIf` method. This ensures that the same doctor is not assigned again when there is a conflict.
+
+#### Usage
+
+To use the updated `saveAppointment` function, follow these steps:
+
+1. Ensure that you have the Hospital Management System project set up and running.
+
+2. Make a POST request to the `/hospital/appointment` endpoint with the appointment details. The system will automatically check for appointment time conflicts and assign the appointment to the doctor with the least pending appointments.
+
+3. If a conflict is found, the appointment will be assigned to the next available doctor.
+
+4. The appointment will be saved with the updated doctor assigned and other relevant details.
+
+#### Additional Notes
+
+- The `saveAppointment` function now performs more efficient and intelligent assignment of appointments, taking into account the least pending appointments and time conflicts.
+
+- This enhancement helps to optimize the distribution of appointments and improves the overall efficiency of the hospital management system.
+
+- The code has been thoroughly tested to ensure proper functionality and handling of appointment time conflicts.
+
+- Feel free to explore other endpoints and functionalities of the Hospital Management System project for managing doctors, patients, and appointments.
+
+
 ## APIs
 
 All APIs require authentication. Admin has access to all APIs, while doctors and receptionists have access to specific APIs.
