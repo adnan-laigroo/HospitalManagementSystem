@@ -70,15 +70,39 @@ public class AppointmentServiceImplementation implements AppointmentService {
 		if (doctorList.isEmpty()) {
 			throw new DoctorNotFoundException("No doctor found for symptom " + patient.getSymptom());
 		}
-		appointment.setDocId(getRandomDoctor(doctorList).getEmail());
+		appointment.setDocId(getDoctorWithLeastPendingAppointments(doctorList));
 		appRepo.save(appointment);
+	}
+
+	private String getDoctorWithLeastPendingAppointments(List<Doctor> doctorList) {
+		String doctorWithLeastPendingAppointments = doctorList.get(0).getEmail();
+		int minPendingAppointments = countPendingAppointments(doctorWithLeastPendingAppointments);
+		for (Doctor doctor : doctorList) {
+			int pendingAppointments = countPendingAppointments(doctor.getEmail());
+			if (pendingAppointments < minPendingAppointments) {
+				minPendingAppointments = pendingAppointments;
+				doctorWithLeastPendingAppointments = doctor.getEmail();
+			}
+		}
+		return doctorWithLeastPendingAppointments;
+	}
+
+	private int countPendingAppointments(String email) {
+		int count = 0;
+		List<Appointment> appointments = appRepo.findByDocId(email);
+		for (Appointment appointment : appointments) {
+			if (appointment.getAppointmentStatus().equals("Pending")) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	@Override
 	public Appointment deleteAppointment(@Valid String apId) {
 		Appointment appointment = appRepo.findById(apId).orElse(null);
-		if (appointment==null){
-			throw  new AppointmentNotConfirmedException("No Appointment with ID "+appRepo);
+		if (appointment == null) {
+			throw new AppointmentNotConfirmedException("No Appointment with ID " + appRepo);
 		}
 		appRepo.deleteById(apId);
 		return appointment;
@@ -87,8 +111,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
 	@Override
 	public Appointment updateAppointment(Appointment updatedAppointment, @Valid String apId) {
 		Appointment appointment = appRepo.findById(apId).orElse(null);
-		if (appointment==null){
-			throw  new AppointmentNotConfirmedException("No Appointment with ID "+appRepo);
+		if (appointment == null) {
+			throw new AppointmentNotConfirmedException("No Appointment with ID " + appRepo);
 		}
 		updatedAppointment.setApId(apId);
 		appRepo.save(updatedAppointment);
@@ -98,8 +122,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
 	@Override
 	public List<Appointment> getAppointmentList() {
 		List<Appointment> appointments = appRepo.findAll();
-		if (appointments.isEmpty()){
-			throw  new AppointmentNotConfirmedException("No Appointments."+appRepo);
+		if (appointments.isEmpty()) {
+			throw new AppointmentNotConfirmedException("No Appointments." + appRepo);
 		}
 		return appointments;
 	}
@@ -107,8 +131,8 @@ public class AppointmentServiceImplementation implements AppointmentService {
 	@Override
 	public Appointment updateAppointmentStatus(Appointment updatedAppointment, @Valid String apId) {
 		Appointment appointment = appRepo.findById(apId).orElse(null);
-		if (appointment==null){
-			throw  new AppointmentNotConfirmedException("No Appointment with ID "+appRepo);
+		if (appointment == null) {
+			throw new AppointmentNotConfirmedException("No Appointment with ID " + appRepo);
 		}
 		appointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
 		appRepo.save(appointment);
