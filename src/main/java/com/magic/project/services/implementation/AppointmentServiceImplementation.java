@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.magic.project.handler.AppointmentNotConfirmedException;
 import com.magic.project.handler.DoctorNotFoundException;
 import com.magic.project.handler.PatientNotFoundException;
 import com.magic.project.models.Appointment;
@@ -57,6 +58,10 @@ public class AppointmentServiceImplementation implements AppointmentService {
 		appointment.setAppointmentDate(LocalDate.now());
 		appointment.setAppointmentTime(LocalTime.parse(appointment.getAppointmentTime(), formatter).format(formatter));
 		appointment.setAppointmentStatus("Pending");
+		if (LocalTime.parse(appointment.getAppointmentTime(), formatter).isBefore(LocalTime.now())) {
+			throw new AppointmentNotConfirmedException("Appointment for time: " + appointment.getAppointmentTime()
+					+ " can't be booked before: " + LocalTime.now());
+		}
 		Patient patient = patRepo.findById(appointment.getPatId()).orElse(null);
 		if (patient == null) {
 			throw new PatientNotFoundException("No patient found of patient Id: " + appointment.getPatId());
@@ -72,15 +77,19 @@ public class AppointmentServiceImplementation implements AppointmentService {
 	@Override
 	public Appointment deleteAppointment(@Valid String apId) {
 		Appointment appointment = appRepo.findById(apId).orElse(null);
-//		if (Appointment==null){
-//			throw  new Exception("No Appointment with ID "+appRepo);
-//		}
+		if (appointment==null){
+			throw  new AppointmentNotConfirmedException("No Appointment with ID "+appRepo);
+		}
 		appRepo.deleteById(apId);
 		return appointment;
 	}
 
 	@Override
 	public Appointment updateAppointment(Appointment updatedAppointment, @Valid String apId) {
+		Appointment appointment = appRepo.findById(apId).orElse(null);
+		if (appointment==null){
+			throw  new AppointmentNotConfirmedException("No Appointment with ID "+appRepo);
+		}
 		updatedAppointment.setApId(apId);
 		appRepo.save(updatedAppointment);
 		return updatedAppointment;
@@ -89,12 +98,18 @@ public class AppointmentServiceImplementation implements AppointmentService {
 	@Override
 	public List<Appointment> getAppointmentList() {
 		List<Appointment> appointments = appRepo.findAll();
+		if (appointments.isEmpty()){
+			throw  new AppointmentNotConfirmedException("No Appointments."+appRepo);
+		}
 		return appointments;
 	}
 
 	@Override
 	public Appointment updateAppointmentStatus(Appointment updatedAppointment, @Valid String apId) {
 		Appointment appointment = appRepo.findById(apId).orElse(null);
+		if (appointment==null){
+			throw  new AppointmentNotConfirmedException("No Appointment with ID "+appRepo);
+		}
 		appointment.setAppointmentStatus(updatedAppointment.getAppointmentStatus());
 		appRepo.save(appointment);
 		return appointment;

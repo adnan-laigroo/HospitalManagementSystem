@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -53,12 +54,34 @@ public class ExceptionAndValidationHandler extends ResponseEntityExceptionHandle
 		ResponseError response = new ResponseError("Doctor Not Found", errorMessages);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 	}
-
-	@ExceptionHandler(TimeInfoException.class)
-	public ResponseEntity<Object> handleTimeInfoException(TimeInfoException ex) {
+	@ExceptionHandler(ReceptionistNotFoundException.class)
+	public ResponseEntity<Object> handleReceptionistNotFoundException(ReceptionistNotFoundException ex) {
 		List<String> errorMessages = new ArrayList<>();
 		errorMessages.add(ex.getMessage());
-		ResponseError response = new ResponseError("Time Info Exception", errorMessages);
+		ResponseError response = new ResponseError("Receptionist Not Found", errorMessages);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	}
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex) {
+		List<String> errorMessages = new ArrayList<>();
+		errorMessages.add(ex.getMessage());
+		ResponseError response = new ResponseError("User Not Found", errorMessages);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	}
+	
+	@ExceptionHandler(AppointmentNotConfirmedException.class)
+	public ResponseEntity<Object> handleAppointmentException(AppointmentNotConfirmedException ex) {
+		List<String> errorMessages = new ArrayList<>();
+		errorMessages.add(ex.getMessage());
+		ResponseError response = new ResponseError("Appointment Not Confirmed ", errorMessages);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+	}
+
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<Object> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+		List<String> errorMessages = new ArrayList<>();
+		errorMessages.add(ex.getMessage());
+		ResponseError response = new ResponseError("Username Not Found Exception", errorMessages);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 	}
 
