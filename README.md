@@ -165,5 +165,6 @@ To run the Hospital Management System project, follow these steps:
 4. Run the application: `./mvnw spring-boot:run`
 5. Access the API endpoints using a tool like Postman or cURL.
 
+## Note: Postman collection is also in the project folder.
 
 
