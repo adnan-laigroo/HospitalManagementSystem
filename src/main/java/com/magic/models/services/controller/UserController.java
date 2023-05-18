@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.magic.models.Password;
 import com.magic.models.User;
 import com.magic.models.services.UserService;
 
@@ -25,7 +27,7 @@ public class UserController {
 	// update a user password by ID and Patch request
 	@PatchMapping("/update/password/{username}")
 	public ResponseEntity<User> updateUserPassword(@Valid @PathVariable String username,
-			@RequestBody User updatedPassword) {
+			@Valid @RequestBody Password updatedPassword) {
 		User user = userServ.updateUserPassword(updatedPassword, username);
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}

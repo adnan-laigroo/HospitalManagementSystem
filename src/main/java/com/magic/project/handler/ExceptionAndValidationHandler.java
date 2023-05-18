@@ -2,6 +2,7 @@ package com.magic.project.handler;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,34 +34,32 @@ public class ExceptionAndValidationHandler extends ResponseEntityExceptionHandle
 		if (errorMessages.isEmpty()) {
 			errorMessages.add("Invalid request payload");
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessages);
+		ResponseError response = new ResponseError("Validation Failed", errorMessages);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 	}
 
 	@ExceptionHandler(PatientNotFoundException.class)
-	public ResponseEntity<Object> handleExceptionNotFoundException(PatientNotFoundException ex) {
-		List<String> list = new ArrayList<>();
-		list.add(ex.getMessage());
-		ResponseError responseError = new ResponseError("No record Found", list);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError);
-
+	public ResponseEntity<Object> handlePatientNotFoundException(PatientNotFoundException ex) {
+		List<String> errorMessages = new ArrayList<>();
+		errorMessages.add(ex.getMessage());
+		ResponseError response = new ResponseError("Patient Not Found", errorMessages);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 	}
 
 	@ExceptionHandler(DoctorNotFoundException.class)
-	public ResponseEntity<Object> handleExceptionNotFoundException(DoctorNotFoundException ex) {
-		List<String> list = new ArrayList<>();
-		list.add(ex.getMessage());
-		ResponseError responseError = new ResponseError("No record Found", list);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError);
-
+	public ResponseEntity<Object> handleDoctorNotFoundException(DoctorNotFoundException ex) {
+		List<String> errorMessages = new ArrayList<>();
+		errorMessages.add(ex.getMessage());
+		ResponseError response = new ResponseError("Doctor Not Found", errorMessages);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 	}
 
 	@ExceptionHandler(TimeInfoException.class)
-	public ResponseEntity<Object> handleExceptionNotFoundException(TimeInfoException ex) {
-		List<String> list = new ArrayList<>();
-		list.add(ex.getMessage());
-		ResponseError responseError = new ResponseError("No record Found", list);
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseError);
-
+	public ResponseEntity<Object> handleTimeInfoException(TimeInfoException ex) {
+		List<String> errorMessages = new ArrayList<>();
+		errorMessages.add(ex.getMessage());
+		ResponseError response = new ResponseError("Time Info Exception", errorMessages);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 	}
 
 }

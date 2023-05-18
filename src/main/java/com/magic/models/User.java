@@ -1,10 +1,9 @@
 package com.magic.models;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 public class User {
@@ -13,8 +12,7 @@ public class User {
 	private String username;
 
 	@NotBlank(message = "Password is required")
-	@Size(min = 8, max = 15, message = "Password length must be between 8 and 15 characters")
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$", message = "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character")
+	@Column(length = 200)
 	private String password;
 
 	@NotBlank(message = "Role is required")
