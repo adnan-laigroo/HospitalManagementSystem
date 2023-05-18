@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"firstName\": \"John\",\n\t\"lastName\": \"Doe\",\n\t\"email\": \"john.doe@gmail.com\",\n\t\"phoneNo\": \"1234567890\",\n\t\"speciality\": \"Orthopedic\",\n    \"role\": \"Doctor\",\n    \"password\":\"Admin@123\"\n}",
+							"raw": "{\n\t\"firstName\": \"John\",\n\t\"lastName\": \"Doe\",\n\t\"email\": \"john.dodddadaede@gmail.com\",\n\t\"phoneNo\": \"1234567890\",\n\t\"speciality\": \"Orthopedic\",\n    \"role\": \"Doctor\",\n    \"password\":\"Admin@123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -42,7 +42,7 @@
 				{
 					"name": "Get All Doctors",
 					"request": {
-						"method": "PUT",
+						"method": "GET",
 						"header": [],
 						"url": {
 							"raw": "http://localhost:8080/hospital/doctor/list",
@@ -120,7 +120,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"firstName\": \"Jane\",\n\t\"lastName\": \"Smith\",\n\t\"email\": \"jane.smith@example.com\",\n\t\"phoneNo\": \"9876543210\",\n    \"role\": \"Receptionist\",\n    \"password\":\"Admin@123\"\n}",
+							"raw": "{\n\t\"firstName\": \"Jane\",\n\t\"lastName\": \"Smith\",\n\t\"email\": \"jane.smitdddh@example.com\",\n\t\"phoneNo\": \"9876543210\",\n    \"role\": \"Receptionist\",\n    \"password\":\"Admin@123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -328,7 +328,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}"
+							"raw": " {\r\n        \"patId\": \"P00003\",\r\n        \"bloodGroup\": \"A+\",\r\n        \"appointmentTime\": \"10:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/hospital/appointment/add",
@@ -374,10 +379,15 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}"
+							"raw": "{\n   \"appointmentStatus\": \"Done\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/hospital/appointment/update/status/{appId}",
+							"raw": "http://localhost:8080/hospital/appointment/update/status/A000002",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -388,7 +398,7 @@
 								"appointment",
 								"update",
 								"status",
-								"{appId}"
+								"A000002"
 							]
 						}
 					},
@@ -401,7 +411,12 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}"
+							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
 							"raw": "http://localhost:8080/hospital/appointment/update/{appId}",
@@ -437,6 +452,91 @@
 								"appointment",
 								"delete",
 								"{appId}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User APIs",
+			"item": [
+				{
+					"name": "Update User Password",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/user/update/password/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"user",
+								"update",
+								"password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User List",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "user",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "3256e465-35c5-4b37-a60c-8488c1867874",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"property1\": \"value1\",\n    \"property2\": \"value2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/hospital/user/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"hospital",
+								"user",
+								"list"
 							]
 						}
 					},
