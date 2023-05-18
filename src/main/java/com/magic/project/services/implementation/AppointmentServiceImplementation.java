@@ -70,7 +70,22 @@ public class AppointmentServiceImplementation implements AppointmentService {
 		if (doctorList.isEmpty()) {
 			throw new DoctorNotFoundException("No doctor found for symptom " + patient.getSymptom());
 		}
-		appointment.setDocId(getDoctorWithLeastPendingAppointments(doctorList));
+		// Check if the appointment time conflicts with existing appointments for the
+		// doctor with least pending appointments
+		String doctorWithLeastPendingAppointments = getDoctorWithLeastPendingAppointments(doctorList);
+		List<Appointment> doctorAppointments = appRepo.findByDocId(doctorWithLeastPendingAppointments);
+		for (Appointment existingAppointment : doctorAppointments) {
+			if (existingAppointment.getAppointmentDate().equals(appointment.getAppointmentDate())
+					&& existingAppointment.getAppointmentTime().equals(appointment.getAppointmentTime())) {
+				// Appointment time conflict found, remove the doctor and get the next available
+				// doctor
+				String oldDoctor = doctorWithLeastPendingAppointments;
+				doctorList.removeIf(doctor -> doctor.getEmail().equals(oldDoctor));
+				doctorWithLeastPendingAppointments = getDoctorWithLeastPendingAppointments(doctorList);
+				break;
+			}
+		}
+		appointment.setDocId(doctorWithLeastPendingAppointments);
 		appRepo.save(appointment);
 	}
 
