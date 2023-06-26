@@ -1,18 +1,19 @@
 # Hospital Management System Project in Spring Boot
 
-The Hospital Management System project is a RESTful API designed to manage various activities of a hospital, including patient management, doctor management, appointment management, and patient record management. The project aims to streamline hospital operations, reduce manual work, and improve service efficiency.
+The Hospital Management System project is a RESTful API designed to manage various activities of a hospital, including patient management, doctor management, appointment management, patient record management, prescription management, medicine management, and medical test management. The project aims to streamline hospital operations, reduce manual work, and improve service efficiency.
 
 ## Project Objective
 
-The main objective of this project is to provide an online platform for managing hospital activities. The system allows doctors to check appointments, while receptionists can book appointments for new patients. By digitizing the workflow, the project reduces manual work, streamlines processes, and improves overall efficiency.
+The main objective of this project is to provide an online platform for managing hospital activities. The system allows doctors to check appointments, view patient records, prescribe medicines, and order medical tests. Receptionists can book appointments for new patients, manage patient records, and handle prescription and medical test requests. Admins have access to all functionalities and can manage doctors, receptionists, medicines, and medical tests. By digitizing the workflow and integrating various functionalities, the project reduces manual work, streamlines processes, and improves overall efficiency.
 
 ## Actors/Users
 
-The application has three main actors (users):
+The application has four main actors (users):
 
-1. Admin: Responsible for managing doctors and receptionists.
-2. Doctor: Can view appointments, access patient lists, update appointment statuses, and change passwords.
-3. Receptionist: Can add, edit, and view patients and appointments, update appointment statuses, and change passwords.
+1. Admin: Responsible for managing doctors, receptionists, medicines, and medical tests.
+2. Doctor: Can view appointments, access patient records, prescribe medicines, and order medical tests.
+3. Receptionist: Can add, edit, and view patients, appointments, prescriptions, and medical test requests.
+4. Pharmacist: Can manage medicines, including adding, updating, and deleting medicines from the inventory.
 
 ## Functional Requirements
 
@@ -24,31 +25,40 @@ The admin has the following tasks and responsibilities:
 - View the list of doctors
 - Add, delete, and update receptionists
 - View the list of receptionists
-- Add, delete, and update patients
-- Add, delete, and update appointments
+- Add, delete, and update medicines
+- View the list of medicines
+- Add, delete, and update medical tests
+- View the list of medical tests
 - Change password
-- Update appointment status
 
 ### Doctor
 
 The doctor can perform the following operations:
 
 - View appointments
-- View the patient list
-- Update appointment status
+- View patient records
+- Prescribe medicines for patients
+- Order medical tests for patients
 - Change password
 
 ### Receptionist
 
 The receptionist can perform the following operations:
 
-- Add, edit, and view appointments
 - Add, edit, and view patients
-- Update appointment status
+- Add, edit, and view appointments
+- Add, edit, and view prescriptions
+- Add, edit, and view medical test requests
+- Change password
+
+### Pharmacist
+
+The pharmacist can perform the following operations:
+
+- Add, edit, and view medicines
 - Change password
 
 ## Data Model and Backend Validation
-
 ### Doctor
 
 The `Doctor` class has the following fields and backend validations:
@@ -94,8 +104,66 @@ The `Appointment` class has the following fields and backend validations:
 #### Save Appointment Function
 
 The `saveAppointment` function in the `AppointmentServiceImplementation` class has been enhanced to check for appointment time conflicts and assign the appointment to the doctor with the least pending appointments.
+### Prescription
 
-#### Features
+The `Prescription` class has the following fields:
+
+- `apId` (String, PK): Represents the appointment ID, which is also used as the prescription ID.
+- `patientName` (String): Stores the patient's name.
+- `doctorName` (String): Stores the doctor's name.
+- `symptom` (String): Represents the patient's symptom.
+- `diagnosis` (String): Represents the doctor's diagnosis.
+- `prescribedMedicines` (List of `PrescribedMedicine`): Contains the list of prescribed medicines.
+- `prescribedTests` (List of `PrescribedTest`): Contains the list of prescribed medical tests.
+- `notes` (String): Additional notes or instructions.
+
+### PrescribedMedicine
+
+The `PrescribedMedicine` class has the following fields:
+
+- `medicineName` (String): Stores the name of the prescribed medicine.
+- `dosage` (String): Represents the dosage instructions for the medicine.
+- `frequency` (String): Indicates the frequency of medication.
+
+### PrescribedTest
+
+The `PrescribedTest` class has the following fields:
+
+- `testName` (String): Stores the name of the prescribed medical test.
+- `testResult` (String): Represents the test result.
+
+### Medicine
+
+The `Medicine` class has the following fields:
+
+- `medicineName` (String, PK): Represents the name of the medicine.
+- `manufacturer` (String): Stores the name of the medicine manufacturer.
+- `description` (String): Provides a description of the medicine.
+- `price` (double): Represents the price of the medicine.
+- `quantity` (int): Indicates the quantity of the medicine in stock.
+
+### MedicalTest
+
+The `MedicalTest` class has the following fields:
+
+- `testName` (String, PK): Represents the name of the medical test.
+- `testDescription` (String): Provides a description of the medical test.
+- `testPrice` (double): Represents the price of the medical test.
+- `testType` (String): Indicates the type of the medical test.
+
+## Technologies Used
+
+The project is implemented using the following technologies:
+
+- Java
+- Spring Boot
+- Spring Data JPA
+- Hibernate
+- MySQL (Database)
+- Maven (Dependency Management)
+- Postman (API Testing)
+  
+ #### Features
 
 1. Appointment Time Conflict Check: Before saving the appointment, the function now checks if the appointment time conflicts with existing appointments for the doctor with the least pending appointments. It retrieves the list of appointments for the doctor and compares the appointment date and time with the new appointment. If a conflict is found, the function removes the doctor from the list and gets the next available doctor.
 
@@ -124,47 +192,53 @@ To use the updated `saveAppointment` function, follow these steps:
 - Feel free to explore other endpoints and functionalities of the Hospital Management System project for managing doctors, patients, and appointments.
 
 
-## APIs
-
-All APIs require authentication. Admin has access to all APIs, while doctors and receptionists have access to specific APIs.
-
-### Admin APIs
-
-- `PATCH /hospital/user/update/password/{username}` - Update a user's password by username
-- `GET /hospital/user/list` - Get a list of all users
-
-### Doctor APIs
-
-- `GET /hospital/doctor/appointment` - View appointments
-- `GET /hospital/doctor/patient` - View the patient list
-- `PATCH /hospital/doctor/appointment/{id}` - Update appointment status
-- `PATCH /hospital/doctor/update/password/{username}` - Update the doctor's password
-
-### Receptionist APIs
-
-- `POST /hospital/receptionist/patient` - Add a new patient
-- `PUT /hospital/receptionist/patient/{id}` - Update a patient by ID
-- `GET /hospital/receptionist/patient` - Get a list of all patients
-- `POST /hospital/receptionist/appointment` - Add a new appointment
-- `PUT /hospital/receptionist/appointment/{id}` - Update an appointment by ID
-- `PATCH /hospital/receptionist/update/password/{username}` - Update the receptionist's password
-
-## DTO Classes
-
-Both the Doctor and Receptionist entities have corresponding DTO (Data Transfer Object) classes that include two additional fields compared to the entity class: `password` and `role`.
-
-Please refer to the source code for the DTO classes.
-
 ## Getting Started
 
-To run the Hospital Management System project, follow these steps:
+To get started with the project, follow these steps:
 
-1. Clone the repository: `git clone [<repository-url>](https://github.com/adnan-laigroo/HospitalManagementSystem)`
-2. Navigate to the project directory: `cd hospital-management-system`
-3. Build the project: `./mvnw clean install`
-4. Run the application: `./mvnw spring-boot:run`
-5. Access the API endpoints using a tool like Postman or cURL.
+1. Clone the repository to your local machine.
+2. Open the project in your preferred IDE (e.g., IntelliJ, Eclipse).
+3. Configure the MySQL database connection in `application.properties`.
+4. Build the project using Maven.
+5. Run the application.
+6. Use Postman or any other API testing tool to test the endpoints.
+
 
 ## Note: Postman collection is also in the project folder.
 
+## API Endpoints
 
+The project exposes the following API endpoints:
+
+- `/api/doctors` (GET, POST, PUT, DELETE): Used for managing doctors.
+- `/api/receptionists` (GET, POST, PUT, DELETE): Used for managing receptionists.
+- `/api/medicines` (GET, POST, PUT, DELETE): Used for managing medicines.
+- `/api/medicaltests` (GET, POST, PUT, DELETE): Used for managing medical tests.
+- `/api/patients` (GET, POST, PUT, DELETE): Used for managing patients.
+- `/api/appointments` (GET, POST, PUT, DELETE): Used for managing appointments.
+- `/api/prescriptions` (GET, POST, PUT, DELETE): Used for managing prescriptions.
+- `/api/medicinetests` (GET, POST, PUT, DELETE): Used for managing prescribed medicines and tests within a prescription.
+
+Note: Replace `api` with the appropriate base URL or endpoint base path.
+
+## Project Structure
+
+The project follows a standard Spring Boot application structure:
+
+- `src/main/java/com/example/hospital`: Contains the main Java classes and packages.
+  - `config`: Contains the configuration classes for Spring Boot and database.
+  - `controller`: Contains the RESTful API controllers.
+  - `dto`: Contains the Data Transfer Objects used for request/response mapping.
+  - `exception`: Contains the custom exception classes.
+  - `model`: Contains the entity classes representing the data model.
+  - `repository`: Contains the JPA repositories for database operations.
+  - `service`: Contains the service classes for business logic.
+  - `HospitalManagementSystemApplication.java`: The entry point of the Spring Boot application.
+- `src/main/resources`: Contains the application properties and database schema script.
+- `src/test/java/com/example/hospital`: Contains the test classes.
+
+## Conclusion
+
+The Hospital Management System project provides a comprehensive solution for managing various activities within a hospital. It utilizes Spring Boot and other technologies to build a scalable and efficient backend system. The project can be further enhanced by adding more features, such as billing management, user authentication, and reporting functionalities.
+
+For any questions or feedback, please feel free to reach out.
